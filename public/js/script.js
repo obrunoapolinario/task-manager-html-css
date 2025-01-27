@@ -43,10 +43,21 @@ $(document).ready(function () {
     });
 
     $('.task-list').on('click', '.task-expand', function () {
-        const id = $(this).closest('.task').data('id');
+        const $task = $(this).closest('.task');
+        const $taskBody = $task.find('.task-body');
+        const id = $task.data('id');
         const task = tasks.find(task => task.id === id);
+
         task.expanded = !task.expanded;
-        renderTasks();
+
+        // Update the UI for the specific task
+        if (task.expanded) {
+            $taskBody.addClass('expanded');
+            $(this).text('▲');
+        } else {
+            $taskBody.removeClass('expanded');
+            $(this).text('▼');
+        }
     });
 
     $('.task-list').on('change', '.task-priority', function () {

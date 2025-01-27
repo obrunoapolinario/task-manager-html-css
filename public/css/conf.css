@@ -154,8 +154,10 @@
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    transition: all 0.3s ease-in-out;
     pointer-events: none;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, max-height 0.5s ease-in-out;
 }
 
 .task-body.expanded {
@@ -163,6 +165,7 @@
     opacity: 1;
     padding: 15px;
     pointer-events: auto;
+    transform: scaleY(1);
 }
 
 .task-field {
