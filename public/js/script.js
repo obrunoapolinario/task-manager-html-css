@@ -1,12 +1,21 @@
 // JavaScript
 $(document).ready(function () {
+    const savedColor = localStorage.getItem('backgroundColor');
+    if (savedColor) {
+        $('body').css('backgroundColor', savedColor);
+    }
+
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    const saveTasks = () => {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    };
+
     $('.color-square').on('click', function () {
         const color = window.getComputedStyle(this).backgroundColor;
         $('body').css('backgroundColor', color);
         localStorage.setItem('backgroundColor', color);
     });
-
-    let tasks = [];
 
     $('.task-input').on('keypress', function (e) {
         if (e.key === 'Enter' && $(this).val().trim()) {
@@ -22,6 +31,7 @@ $(document).ready(function () {
             tasks.push(task);
             $(this).val('');
             renderTasks();
+            saveTasks();
         }
     });
 
@@ -40,6 +50,7 @@ $(document).ready(function () {
         const task = tasks.find(task => task.id === id);
         task.completed = $(this).is(':checked');
         renderTasks();
+        saveTasks();
     });
 
     $('.task-list').on('click', '.task-expand', function () {
@@ -50,7 +61,6 @@ $(document).ready(function () {
 
         task.expanded = !task.expanded;
 
-        // Update the UI for the specific task
         if (task.expanded) {
             $taskBody.addClass('expanded');
             $(this).text('▲');
@@ -58,17 +68,36 @@ $(document).ready(function () {
             $taskBody.removeClass('expanded');
             $(this).text('▼');
         }
+        saveTasks();
     });
 
     $('.task-list').on('change', '.task-priority', function () {
         const $task = $(this).closest('.task');
         const newPriority = $(this).val();
+        const id = $task.data('id');
+        const task = tasks.find(task => task.id === id);
 
+        task.priority = newPriority;
         $task.removeClass('task--priority-low task--priority-medium task--priority-high');
 
         if (newPriority !== 'none') {
             $task.addClass(`task--priority-${newPriority}`);
         }
+        saveTasks();
+    });
+
+    $('.task-list').on('input', '.task-observations', function () {
+        const id = $(this).closest('.task').data('id');
+        const task = tasks.find(task => task.id === id);
+        task.observations = $(this).val();
+        saveTasks();
+    });
+
+    $('.task-list').on('click', '.task-delete', function () {
+        const id = $(this).closest('.task').data('id');
+        tasks = tasks.filter(task => task.id !== id);
+        renderTasks();
+        saveTasks();
     });
 
     const renderTask = (task) => {
@@ -109,4 +138,5 @@ $(document).ready(function () {
         }
         $('.task-list').append($task);
     }
+    renderTasks();
 });
