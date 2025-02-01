@@ -3,17 +3,39 @@ $(document).ready(function () {
     const savedColor = localStorage.getItem('backgroundColor');
     if (savedColor) {
         $('body').css('backgroundColor', savedColor);
+        $('.footer').css('backgroundColor', savedColor);
     }
 
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let showCompleted = false;
+
+    const updateUI = () => {
+        const uncompletedCount = tasks.filter(task => !task.completed).length;
+        const completedCount = tasks.length - uncompletedCount;
+        
+        if (showCompleted) {
+            $('.footer__label').text(`Realizadas (${completedCount})`);
+            $('.zoom-icon').attr('src', './public/img/zoom-out-icon.png');
+        } else {
+            $('.footer__label').text(`A fazer (${uncompletedCount})`);
+            $('.zoom-icon').attr('src', './public/img/zoom-in-icon.png');
+        }
+    };
+
+    $('.toggle-completed').on('click', function() {
+        showCompleted = !showCompleted;
+        renderTasks();
+    });
 
     const saveTasks = () => {
         localStorage.setItem('tasks', JSON.stringify(tasks));
+        updateUI()
     };
 
     $('.color-square').on('click', function () {
         const color = window.getComputedStyle(this).backgroundColor;
         $('body').css('backgroundColor', color);
+        $('.footer').css('backgroundColor', color);
         localStorage.setItem('backgroundColor', color);
     });
 
@@ -41,14 +63,21 @@ $(document).ready(function () {
         const uncompletedTasks = tasks.filter(task => !task.completed);
         uncompletedTasks.forEach(renderTask);
 
-        const completedTasks = tasks.filter(task => task.completed);
-        completedTasks.forEach(renderTask);
+        if (showCompleted) {
+            const completedTasks = tasks.filter(task => task.completed);
+            completedTasks.forEach(renderTask);
+        }
+
+        updateUI()
     }
 
     $('.task-list').on('change', '.task-checkbox', function () {
         const id = $(this).closest('.task').data('id');
         const task = tasks.find(task => task.id === id);
+        const wasCompleted = task.completed;
         task.completed = $(this).is(':checked');
+    
+        task.expanded = false;
         renderTasks();
         saveTasks();
     });
@@ -105,10 +134,10 @@ $(document).ready(function () {
             <div class="task" data-id="${task.id}">
                 <div class="task-priority-indicator"></div>
                 <div class="task-header">
-                    <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''}>
-                    <span class="task-description">${task.description}</span>
-                    <button class="task-expand">${task.expanded ? '▲' : '▼'}</button>
-                </div>
+                <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''}>
+                <span class="task-description">${task.description}</span>
+                <button class="task-expand ${task.expanded ? 'expanded' : ''}">▼</button>
+            </div>
                 <div class="task-body ${task.expanded ? 'expanded' : ''}">
                     <div class="task-field">
                         <label for="task-observations-${task.id}" class="task-field__label">Observações:</label>

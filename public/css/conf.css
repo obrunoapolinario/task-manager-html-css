@@ -135,13 +135,21 @@
 }
 
 .task-expand {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    font-size: 16px;
-    color: var(--footer-text);
+    width: 24px;
+    height: 24px;
     border: none;
-    background-color: transparent;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.8s ease;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--footer-text);
+}
+
+.task-expand.expanded {
+    transform: rotate(180deg);
 }
 
 .task-body {
@@ -156,16 +164,15 @@
     overflow: hidden;
     pointer-events: none;
     transform: scaleY(0);
-    transform-origin: top;
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, max-height 0.5s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    transform-origin: top center;
 }
 
 .task-body.expanded {
-    max-height: 500px;
-    opacity: 1;
-    padding: 15px;
-    pointer-events: auto;
     transform: scaleY(1);
+    opacity: 1;
+    max-height: 500px;
+    padding: 15px;
 }
 
 .task-field {
@@ -264,6 +271,23 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.footer__counter {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.toggle-completed {
+    cursor: pointer;
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 }
 
 .footer__label {
