@@ -193,6 +193,10 @@ body {
     padding: 5px;
 }
 
+.task-field textarea:disabled {
+    cursor: not-allowed;
+}
+
 .task-completed {
     text-decoration: line-through;
 }
@@ -224,6 +228,10 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 4px;
     cursor: pointer;
+}
+
+.task-priority:disabled {
+    cursor: not-allowed;
 }
 
 .task-priority-indicator {
