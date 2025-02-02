@@ -35,8 +35,15 @@
     padding: 0;
 }
 
+body {
+    height: 100%;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .header {
-    height: var(--header-height);
+    flex: 0 0 var(--header-height);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,6 +60,8 @@
     max-width: var(--task-max-width);
     width: 100%;
     margin: 0 auto;
+    flex: 1 1 auto;
+    overflow-y: scroll;
 }
 
 .container--footer {
@@ -184,14 +193,6 @@
     padding: 5px;
 }
 
-.task-field textarea:disabled {
-    background-color: var(--footer-text);
-}
-
-.task-field select:disabled {
-    background-color: var(--footer-text);
-}
-
 .task-completed {
     text-decoration: line-through;
 }
@@ -276,7 +277,7 @@
 }
 
 .footer {
-    position: fixed;
+    flex: 0 0 auto;
     bottom: 0;
     left: 0;
     right: 0;
