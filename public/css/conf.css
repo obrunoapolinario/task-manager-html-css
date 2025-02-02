@@ -320,6 +320,18 @@ body {
     color: var(--footer-text);
 }
 
+@media (max-width: 768px) {
+    .task-body.expanded {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .task-delete {
+        width: 100%;
+    }
+}
+
+
 .color-palette {
     display: flex;
     gap: var(--task-gap);
