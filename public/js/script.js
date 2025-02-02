@@ -134,10 +134,10 @@ $(document).ready(function () {
             <div class="task" data-id="${task.id}">
                 <div class="task-priority-indicator"></div>
                 <div class="task-header">
-                <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''}>
-                <span class="task-description">${task.description}</span>
-                <button class="task-expand ${task.expanded ? 'expanded' : ''}">▼</button>
-            </div>
+                    <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''}>
+                    <span class="task-description">${task.description}</span>
+                    <button class="task-expand ${task.expanded ? 'expanded' : ''}">▼</button>
+                </div>
                 <div class="task-body ${task.expanded ? 'expanded' : ''}">
                     <div class="task-field">
                         <label for="task-observations-${task.id}" class="task-field__label">Observações:</label>
