@@ -135,18 +135,18 @@ $(document).ready(function () {
                 <div class="task-priority-indicator"></div>
                 <div class="task-header">
                     <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''}>
-                    <span class="task-description">${task.description}</span>
+                    <span class="task-description ${task.completed ? "task-completed" : ""}">${task.description}</span>
                     <button class="task-expand ${task.expanded ? 'expanded' : ''}">▼</button>
                 </div>
                 <div class="task-body ${task.expanded ? 'expanded' : ''}">
                     <div class="task-field">
                         <label for="task-observations-${task.id}" class="task-field__label">Observações:</label>
-                        <textarea id="task-observations-${task.id}" class="task-observations" placeholder="Escreva aqui...">${task.observations}</textarea>
+                        <textarea id="task-observations-${task.id}" class="task-observations" ${task.completed ? "disabled" : ""}>${task.observations}</textarea>
                     </div>
                     <div class="task-field-container">
                         <div class="task-field">
-                            <label for="task-priority-${task.id}" class="task-field__label">Prioridade:</label>
-                            <select id="task-priority-${task.id}" class="task-priority">
+                            <label for="task-priority-${task.id}" class="task-field__label">Prioridade</label>
+                            <select id="task-priority-${task.id}" class="task-priority" ${task.completed ? "disabled" : ""}>
                                 <option value="none" ${task.priority === 'none' ? 'selected' : ''}>Nenhuma</option>
                                 <option value="low" ${task.priority === 'low' ? 'selected' : ''}>Baixa</option>
                                 <option value="medium" ${task.priority === 'medium' ? 'selected' : ''}>Média</option>

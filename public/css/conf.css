@@ -180,6 +180,22 @@
     gap: var(--task-gap);
 }
 
+.task-field textarea {
+    padding: 5px;
+}
+
+.task-field textarea:disabled {
+    background-color: var(--footer-text);
+}
+
+.task-field select:disabled {
+    background-color: var(--footer-text);
+}
+
+.task-completed {
+    text-decoration: line-through;
+}
+
 .task-field__label {
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
