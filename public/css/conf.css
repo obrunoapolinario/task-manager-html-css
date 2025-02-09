@@ -61,6 +61,11 @@ body {
     margin: 0 auto;
     flex: 1 1 auto;
     overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.container::-webkit-scrollbar {
+    display: none; 
 }
 
 .container--footer {
