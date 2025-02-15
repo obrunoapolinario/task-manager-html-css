@@ -27,6 +27,12 @@ $(document).ready(function () {
         renderTasks();
     });
 
+    const scrollToTaskInput = () => {
+        const $taskInput = $('.task-input');
+        $taskInput[0].scrollIntoView({ behavior: 'smooth', block: 'end' });
+        $taskInput.focus();
+    };
+
     const saveTasks = () => {
         localStorage.setItem('tasks', JSON.stringify(tasks));
         updateUI()
@@ -50,10 +56,16 @@ $(document).ready(function () {
                 expanded: false
             };
 
+            if (tasks.find(existingTask => existingTask.description === task.description && !existingTask.completed)) {
+                alert('Tarefa já cadastrada');
+                return;
+            }
+
             tasks.push(task);
             $(this).val('');
             renderTasks();
             saveTasks();
+            scrollToTaskInput();
         }
     });
 
@@ -134,7 +146,7 @@ $(document).ready(function () {
             <div class="task" data-id="${task.id}">
                 <div class="task-priority-indicator"></div>
                 <div class="task-header">
-                    <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''}>
+                    <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked disabled' : ''} />
                     <span class="task-description ${task.completed ? "task-completed" : ""}">${task.description}</span>
                     <button class="task-expand ${task.expanded ? 'expanded' : ''}">▼</button>
                 </div>
